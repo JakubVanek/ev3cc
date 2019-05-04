@@ -378,18 +378,21 @@ OpCodes += [
            [
                T.IN_32("OFFSET", "Branch target, relative to ?")
            ]),
+
     OpCode(("opJR_FALSE", 0x41), None,
            "Branch relative if FLAG is FALSE (zero)",
            [
                T.IN_8("FLAG", "Flag upon which to decide the action"),
                T.IN_32("OFFSET", "Branch target, relative to ?")
            ]),
+
     OpCode(("opJR_TRUE", 0x42), None,
            "Branch relative if FLAG is TRUE (non zero)",
            [
                T.IN_8("FLAG", "Flag upon which to decide the action"),
                T.IN_32("OFFSET", "Branch target, relative to ?")
            ]),
+
     OpCode(("opJR_NAN", 0x43), None,
            "Branch relative if VALUE is NAN (not a number)",
            [
@@ -407,6 +410,7 @@ suffixes: Dict[PlainParams, str] = {PlainParams.Int8: "8",
 ops: List[str] = ["LT", "GT", "EQ", "NEQ", "LTEQ", "GTEQ"]
 for op in ops:
     for typ, end in suffixes:
+
         OpCodes.append(OpCode(
             (f"opCP_{op}{end}", current_code), None,
             f"If LEFT is {op} RIGTH - set FLAG",
@@ -415,6 +419,7 @@ for op in ops:
                 PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
                 T.OUT_8("FLAG", "1 if condition holds, 0 otherwise")
             ]))
+
         OpCodes.append(OpCode(
             (f"opJR_{op}{end}", adjacent_code), None,
             f"Branch relative OFFSET if LEFT is {op} RIGHT",
@@ -423,10 +428,12 @@ for op in ops:
                 PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
                 T.IN_32("OFFSET", "Branch target, relative to ?")
             ]))
+
         current_code += 1
         adjacent_code += 1
 
 for typ, end in suffixes:
+
     OpCodes.append(OpCode(
         (f"opSELECT{end}", current_code), None,
         f"Select a DATA_{end} depending on bool value of a flag",
@@ -436,6 +443,7 @@ for typ, end in suffixes:
             PlainParam(type=typ, is_in=True, is_out=False, name="SOURCE2", desc="Second value (False)"),
             PlainParam(type=typ, is_in=False, is_out=True, name="*RESULT", desc="Destination"),
         ]))
+
     current_code += 1
 
 OpCodes += [
@@ -445,6 +453,7 @@ OpCodes += [
                T.IN_8("COMMAND", "Command string (HND)"),
                T.OUT_32("STATUS", "Return status of the command")
            ]),
+
     OpCode(("opPORT_CNV_OUTPUT", 0x61), None,
            "Convert encoded port to Layer and Bitfield",
            [
@@ -453,6 +462,7 @@ OpCodes += [
                T.OUT_8("Bitfield", "Bitfield"),
                T.OUT_8("Inverted", "True if left/right motor are inverted (ie, C&A)"),
            ]),
+
     OpCode(("opPORT_CNV_INPUT", 0x62), None,
            "Convert encoded port to Layer and Port",
            [
@@ -460,6 +470,7 @@ OpCodes += [
                T.OUT_8("Layer", "Layer"),
                T.OUT_8("PortOut", "0-index port for use with VM commands")
            ]),
+
     OpCode(("opNOTE_TO_FREQ", 0x63), None,
            "Convert note to tone",
            [
@@ -474,11 +485,13 @@ OpCodes += [
            [
                T.IN_8("NUMBER", "Error number")
            ]),
+
     OpCode(("opINFO", 0x7C), ("GET_ERROR", 2),
            "Pop an error from VM error queue.",
            [
                T.OUT_8("NUMBER", "Error number")
            ]),
+
     OpCode(("opINFO", 0x7C), ("ERRORTEXT", 3),
            "Convert error number to text string",
            [
@@ -492,16 +505,19 @@ OpCodes += [
            [
                T.OUT_8("VALUE", "Volume [0..100%]")
            ]),
+
     OpCode(("opINFO", 0x7C), ("SET_VOLUME", 5),
            "Set brick volume",
            [
                T.IN_8("VALUE", "Volume [0..100%]")
            ]),
+
     OpCode(("opINFO", 0x7C), ("GET_MINUTES", 6),
            "Get inactive time before entering sleep",
            [
                T.OUT_8("VALUE", "Minutes to sleep [0..120min] (0 = ~)")
            ]),
+
     OpCode(("opINFO", 0x7C), ("SET_MINUTES", 7),
            "Set inactive time before entering sleep",
            [
@@ -516,6 +532,7 @@ OpCodes += [
                T.IN_8("SOURCE", "String variable or handle to string"),
                T.OUT_16("SIZE", "Size")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("ADD", 2),
            "Add two strings (SOURCE1 + SOURCE2 -> DESTINATION)",
            [
@@ -523,6 +540,7 @@ OpCodes += [
                T.IN_8("SOURCE2", "Second string variable or handle to string"),
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("COMPARE", 3),
            "Compare two strings",
            [
@@ -530,12 +548,14 @@ OpCodes += [
                T.IN_8("SOURCE2", "Second string variable or handle to string"),
                T.OUT_8("RESULT", "Result (0 = not equal, 1 = equal)")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("DUPLICATE", 5),
            "Duplicate a string (SOURCE1 -> DESTINATION)",
            [
                T.IN_8("SOURCE1", "Source string variable or handle to string"),
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("VALUE_TO_STRING", 6),
            "Convert floating point value to a string (strips trailing zeroes)",
            [
@@ -544,18 +564,21 @@ OpCodes += [
                T.IN_8("DECIMALS", "Number of decimals"),
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("STRING_TO_VALUE", 7),
            "Convert string to floating point value",
            [
                T.IN_8("SOURCE", "Source string variable or handle to string"),
                T.OUT_F("VALUE", "Value")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("STRIP", 8),
            "Strip a string for spaces (SOURCE1 -> DESTINATION)",
            [
                T.IN_8("SOURCE", "Source string variable or handle to string"),
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("NUMBER_TO_STRING", 9),
            "Convert integer value to a string",
            [
@@ -563,6 +586,7 @@ OpCodes += [
                T.IN_8("FIGURES", "Total number of figures"),
                T.OUT_8("DESTINATION", "String variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("SUB", 10),
            "Return DESTINATION: a substring from SOURCE1 that starts were SOURCE2 ends",
            [
@@ -570,6 +594,7 @@ OpCodes += [
                T.IN_8("SOURCE2", "Second string variable or handle to string"),
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("VALUE_FORMATTED", 11),
            "Convert floating point value to a formatted string",
            [
@@ -578,6 +603,7 @@ OpCodes += [
                T.IN_8("SIZE", "Total size of destination string"),
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
+
     OpCode(("opSTRINGS", 0x7D), ("NUMBER_FORMATTED", 12),
            "Convert integer number to a formatted string",
            [
