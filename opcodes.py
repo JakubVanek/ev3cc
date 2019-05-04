@@ -613,3 +613,31 @@ OpCodes += [
                T.OUT_8("DESTINATION", "Destination string variable or handle to string")
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opMEMORY_WRITE", 0x7E), None,
+           "Write VM memory",
+           [
+               T.IN_16("PRGID", "Program slot number (must be running)"),
+               T.IN_16("OBJID", "Object id (zero means globals)"),
+               T.IN_32("OFFSET", "Offset (start from)"),
+               T.IN_32("SIZE", "Size (length of array to write)"),
+               T.IN_8("ARRAY", "First element of DATA8 array to write")
+           ]),
+
+    OpCode(("opMEMORY_READ", 0x7F), None,
+           "Read VM memory",
+           [
+               T.IN_16("PRGID", "Program slot number (must be running)"),
+               T.IN_16("OBJID", "Object id (zero means globals)"),
+               T.IN_32("OFFSET", "Offset (start from)"),
+               T.IN_32("SIZE", "Size (length of array to read)"),
+               T.OUT_8("ARRAY", "First element of DATA8 array to receive data")
+           ]),
+
+    OpCode(("opUI_FLUSH", 0x80), None,
+           "User Interface flush buffers",
+           [
+
+           ])
+]
