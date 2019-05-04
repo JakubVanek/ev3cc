@@ -1046,3 +1046,322 @@ OpCodes += [
                T.OUT_8("CLICK", "Click sound request (0 = no, 1 = yes)"),
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opUI_DRAW", 0x84), ("UPDATE", 0),
+           "Refresh statusbar & screen",
+           [
+
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("CLEAN", 1),
+           "Reset font & clear screen",
+           [
+
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("PIXEL", 2),
+           "Draw a pixel",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("LINE", 3),
+           "Draw a line",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X end cord [0..LCD_WIDTH]"),
+               T.IN_16("Y1", "Y end cord [0..LCD_HEIGHT]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("CIRCLE", 4),
+           "Draw a circle",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("R", "Radius"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("TEXT", 5),
+           "Draw some text",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("STRING", "First character in string to draw"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("ICON", 6),
+           "Draw an icon",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_8("TYPE", "Icon type (pool)"),
+               T.IN_8("NO", "Icon number ID"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("PICTURE", 7),
+           "Draw an image",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_32("*IP", "Address of picture"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("VALUE", 8),
+           "Draw a float value",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_F("VALUE", "Value to write"),
+               T.IN_8("FIGURES", "Total number of figures inclusive decimal point"),
+               T.IN_8("DECIMALS", "Number of decimals"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("FILLRECT", 9),
+           "Fill a rectangle",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X size [0..LCD_WIDTH - X0]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT - Y0]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("RECT", 10),
+           "Draw a rectangle",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X size [0..LCD_WIDTH - X0]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT - Y0]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("NOTIFICATION", 11),
+           "Draw a notification window",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_8("ICON1", "First icon"),
+               T.IN_8("ICON2", "Second icon"),
+               T.IN_8("ICON3", "Third icon"),
+               T.IN_8("STRING", "First character in notification string"),
+               T.IN_8("*STATE", "State 0 = INIT"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("QUESTION", 12),
+           "Draw a question window",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_8("ICON1", "First icon"),
+               T.IN_8("ICON2", "Second icon"),
+               T.IN_8("STRING", "First character in notification string"),
+               T.IN_8("*STATE", "State 0 = NO, 1 = OK"),
+               T.OUT_8("OK", "Answer 0 = NO, 1 = OK, -1 = SKIP"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("KEYBOARD", 13),
+           "Draw a keyboard",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_8("ICON1", "First icon"),
+               T.IN_8("LENGTH", "Maximal string length"),
+               T.IN_8("DEFAULT", "Default string (0 = none)"),
+               T.IN_8("*CHARSET", "Internal use (must be a variable initialised by a 'valid character set')"),
+               T.OUT_8("STRING", "First character in string receiving keyboard input"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("BROWSE", 14),
+           "Draw a browser",
+           [
+               T.IN_8("TYPE", "Browser type"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X size [0..LCD_WIDTH]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT]"),
+               T.IN_8("LENGTH", "Maximal string length"),
+               T.OUT_8("TYPE",
+                       "Item type (folder, byte code file, sound file, ...)(must be a zero initialised variable)"),
+               T.OUT_8("STRING", "First character in string receiving keyboard input"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("VERTBAR", 15),
+           "Draw a vertical bar",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X size [0..LCD_WIDTH]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT]"),
+               T.IN_16("MIN", "Minimum value"),
+               T.IN_16("MAX", "Maximum value"),
+               T.IN_16("ACT", "Actual value"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("INVERSERECT", 16),
+           "Invert a rectangle on-screen",
+           [
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X size [0..LCD_WIDTH - X0]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT - Y0]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("SELECT_FONT", 17),
+           "Select font type; font will change to 0 when UPDATE is called",
+           [
+               T.IN_8("TYPE", "Font type [0..2]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("TOPLINE", 18),
+           "Enable/disable top status line",
+           [
+               T.IN_8("ENABLE", "Enable top status line (0 = disabled, 1 = enabled)"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("FILLWINDOW", 19),
+           "Fill a Y-delimited window",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR] (Color != BG_COLOR and FG_COLOR -> test pattern)"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("SCROLL", 20),
+           "Scroll up the on-screen graphics",
+           [
+               T.IN_16("Y", "Scroll by Y lines [0..LCD_HEIGHT]"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("DOTLINE", 21),
+           "Draw a dotted line",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X end [0..LCD_WIDTH]"),
+               T.IN_16("Y1", "Y end [0..LCD_HEIGHT]"),
+               T.IN_16("ON", "On pixels"),
+               T.IN_16("OFF", "Off pixels"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("VIEW_VALUE", 22),
+           "Draw a special view for float values?",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_F("VALUE", "Value to write"),
+               T.IN_8("FIGURES", "Total number of figures inclusive decimal point"),
+               T.IN_8("DECIMALS", "Number of decimals"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("VIEW_UNIT", 23),
+           "Draw a special view for float values with units?",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_F("VALUE", "Value to write"),
+               T.IN_8("FIGURES", "Total number of figures inclusive decimal point"),
+               T.IN_8("DECIMALS", "Number of decimals"),
+               T.IN_8("LENGTH", "Maximal string length"),
+               T.IN_8("STRING", "First character in string to draw"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("FILLCIRCLE", 24),
+           "Draw a special view for float values?",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("R", "Radius"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("STORE", 25),
+           "Store LcdSafe to a LCD save pool",
+           [
+               T.IN_8("NO", "Level number"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("RESTORE", 26),
+           "Restore LcdSafe from a LCD save pool",
+           [
+               T.IN_8("NO", "Level number (N=0 -> Saved screen just before run)"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("ICON_QUESTION", 27),
+           "Draw a question window?",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_8("*STATE", "State 0 = INIT"),
+               T.IN_32("ICONS", "bitfield with icons"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("BMPFILE", 28),
+           "Draw an image from file",
+           [
+               T.IN_8("COLOR", "Color [BG_COLOR..FG_COLOR]"),
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_8("NAME", "First character in filename (character string)"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("POPUP", 29),
+           "Toggle a popup from this program/object",
+           [
+               T.IN_8("OPEN", "True -> open, False -> close"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("GRAPH_SETUP", 30),
+           "Initialize a graph window",
+           [
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("X1", "X size [0..(LCD_WIDTH - X0)]"),
+               T.IN_8("ITEMS", "Number of datasets in arrays"),
+               T.IN_16("OFFSET", "DATA16 array (handle) containing Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("SPAN", "DATA16 array (handle) containing Y size [0..(LCD_HEIGHT - hOFFSET[])]"),
+               T.IN_F("MIN", "DATAF array (handle) containing min values"),
+               T.IN_F("MAX", "DATAF array (handle) containing max values"),
+               T.IN_F("SAMPLE", "DATAF array (handle) containing sample values"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("GRAPH_DRAW", 31),
+           "Draw a part of a graph",
+           [
+               T.IN_8("VIEW", "Dataset number to view (0=all)"),
+               T.OUT_F("ACTUAL", "Last datapoint?"),
+               T.OUT_F("LOWEST", "Minimum datapoint?"),
+               T.OUT_F("HIGHEST", "Maximum datapoint?"),
+               T.OUT_F("AVERAGE", "Average datapoint?"),
+           ]),
+
+    OpCode(("opUI_DRAW", 0x84), ("TEXTBOX", 32),
+           "Draws and controls a text box (one long string containing characters and line delimiters) on the screen",
+           [
+               T.IN_16("X0", "X start cord [0..LCD_WIDTH]"),
+               T.IN_16("Y0", "Y start cord [0..LCD_HEIGHT]"),
+               T.IN_16("X1", "X size [0..LCD_WIDTH]"),
+               T.IN_16("Y1", "Y size [0..LCD_HEIGHT]"),
+               T.IN_8("TEXT", "First character in text box text (must be zero terminated)"),
+               T.IN_32("SIZE", "Maximal text size (including zero termination)"),
+               T.IN_8("DELIMITERS", "Delimiter code"),
+               T.IN_8("LINE", "Selected line number"),
+           ]),
+]
