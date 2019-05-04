@@ -410,7 +410,6 @@ suffixes: Dict[PlainParams, str] = {PlainParams.Int8: "8",
 ops: List[str] = ["LT", "GT", "EQ", "NEQ", "LTEQ", "GTEQ"]
 for op in ops:
     for typ, end in suffixes:
-
         OpCodes.append(OpCode(
             (f"opCP_{op}{end}", current_code), None,
             f"If LEFT is {op} RIGTH - set FLAG",
@@ -433,7 +432,6 @@ for op in ops:
         adjacent_code += 1
 
 for typ, end in suffixes:
-
     OpCodes.append(OpCode(
         (f"opSELECT{end}", current_code), None,
         f"Select a DATA_{end} depending on bool value of a flag",
@@ -640,4 +638,173 @@ OpCodes += [
            [
 
            ])
+]
+
+OpCodes += [
+    OpCode(("opUI_READ", 0x81), ("GET_VBATT", 1),
+           "Read battery voltage",
+           [
+               T.OUT_F("VALUE", "Battery voltage [V]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_IBATT", 2),
+           "Read battery current",
+           [
+               T.OUT_F("VALUE", "Battery current [A]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_OS_VERS", 3),
+           "Get os version string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_EVENT", 4),
+           "Get event (internal use)",
+           [
+               T.OUT_8("EVENT", "Event [1,2 = Bluetooth events]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_TBATT", 5),
+           "Read battery temperature",
+           [
+               T.OUT_F("VALUE", "Battery temperature rise [C]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_IINT", 6),
+           "Read battery current integral (used for protection?)",
+           [
+               T.OUT_F("VALUE", "Integrated current [A]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_IMOTOR", 7),
+           "Read current going through the motors",
+           [
+               T.OUT_F("VALUE", "Motor current [A]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_STRING", 8),
+           "Get string from terminal",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_HW_VERS", 9),
+           "Get hardware version string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_FW_VERS", 10),
+           "Get firmware version string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_FW_BUILD", 11),
+           "Get firmware build string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_OS_BUILD", 12),
+           "Get os build string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_ADDRESS", 13),
+           "Get address from terminal (used for debugging)",
+           [
+               T.OUT_32("VALUE", "Address from lms_cmdin")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_CODE", 14),
+           "Get code snippet from terminal (used for debugging)",
+           [
+               T.IN_32("LENGTH", "Maximal code stream length"),
+               T.OUT_32("*IMAGE", "Address of image"),
+               T.OUT_32("GLOBAL", "Address of global variables"),
+               T.OUT_8("FLAG", "Flag tells if image is ready to execute [1=ready]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("KEY", 15),
+           "Get key from terminal (used for debugging)",
+           [
+               T.OUT_8("VALUE", "Key value from lms_cmdin (0 = no key)")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_SHUTDOWN", 16),
+           "Get and clear shutdown flag (internal use)",
+           [
+               T.OUT_8("FLAG", "Flag [1=want to shutdown]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_WARNING", 17),
+           "Read warning bit field (internal use)",
+           [
+               T.OUT_8("WARNINGS", "Bit field containing various warnings")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_LBATT", 18),
+           "Get battery level in %",
+           [
+               T.OUT_8("PCT", "Battery level [0..100]")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("TEXTBOX_READ", 21),
+           "Read line from text box",
+           [
+               T.IN_8("TEXT", "First character in text box text (must be zero terminated)"),
+               T.IN_32("SIZE", "Maximal text size (including zero termination)"),
+               T.IN_8("DELIMITERS", "Delimiter code"),
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.IN_16("LINE", "Selected line number"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_VERSION", 26),
+           "Get version string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_IP", 27),
+           "Get IP address string",
+           [
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_POWER", 29),
+           "Get brick power info in a single call",
+           [
+               T.OUT_F("VBATT", "Battery voltage [V]"),
+               T.OUT_F("IBATT", "Battery current [A]"),
+               T.OUT_F("IINT", "Battery current integral [A]"),
+               T.OUT_F("IMOTOR", "Motor current [A]"),
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_SDCARD", 30),
+           "Check SD card presence",
+           [
+               T.OUT_8("STATE", "SD card present [0..1]"),
+               T.OUT_32("TOTAL", "Kbytes in total"),
+               T.OUT_32("FREE", "Kbytes free"),
+           ]),
+
+    OpCode(("opUI_READ", 0x81), ("GET_USBSTICK", 31),
+           "Check USB stick presence",
+           [
+               T.OUT_8("STATE", "USB stick present [0..1]"),
+               T.OUT_32("TOTAL", "Kbytes in total"),
+               T.OUT_32("FREE", "Kbytes free"),
+           ]),
 ]
