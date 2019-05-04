@@ -413,3 +413,15 @@ for op in ops:
            ],
            f"If LEFT is {op} RIGTH - set FLAG"))
        current_code += 1
+
+for typ, end in suffixes:
+    OpCodes.append(OpCode(
+        (f"opSELECT{end}", current_code), None,
+        [
+            T.IN_8("FLAG", "True -> select first, False -> select second"),
+            PlainParam(type=typ, is_in=True, is_out=False, name="SOURCE1", desc="First value (True)"),
+            PlainParam(type=typ, is_in=True, is_out=False, name="SOURCE2", desc="Second value (False)"),
+            PlainParam(type=typ, is_in=False, is_out=True, name="*RESULT", desc="Destination"),
+        ],
+        f"Select DATA_{end} depending on bool flag value"))
+    current_code += 1
