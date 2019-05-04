@@ -371,5 +371,28 @@ for t1, n1 in suffixes.values():
         current_code += 1
 
 OpCodes += [
-
+    OpCode(("opJR", 0x40), None,
+           [
+               T.IN_32("OFFSET", "Branch target, relative to ?")
+           ],
+           "Branch unconditionally relative"),
+    OpCode(("opJR_FALSE", 0x41), None,
+           [
+               T.IN_8("FLAG", "Flag upon which to decide the action"),
+               T.IN_32("OFFSET", "Branch target, relative to ?")
+           ],
+           "Branch relative if FLAG is FALSE (zero)"),
+    OpCode(("opJR_TRUE", 0x42), None,
+           [
+               T.IN_8("FLAG", "Flag upon which to decide the action"),
+               T.IN_32("OFFSET", "Branch target, relative to ?")
+           ],
+           "Branch relative if FLAG is TRUE (non zero)"),
+    OpCode(("opJR_NAN", 0x43), None,
+           [
+               T.IN_F("VALUE", "Value upon which to decide the action"),
+               T.IN_32("OFFSET", "Branch target, relative to ?")
+           ],
+           "Branch relative if VALUE is NAN (not a number)"),
 ]
+
