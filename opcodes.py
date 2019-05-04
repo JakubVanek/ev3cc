@@ -396,3 +396,20 @@ OpCodes += [
            "Branch relative if VALUE is NAN (not a number)"),
 ]
 
+current_code = 0x44
+suffixes: Dict[PlainParams, str] = {PlainParams.Int8: "8",
+                                    PlainParams.Int16: "16",
+                                    PlainParams.Int32: "32",
+                                    PlainParams.Float32: "F"}
+ops: List[str] = ["LT", "GT", "EQ", "NEQ", "LTEQ", "GTEQ"]
+for op in ops:
+   for typ, end in suffixes:
+       OpCodes.append(OpCode(
+           (f"opCP_{op}{end}", current_code), None,
+           [
+               PlainParam(type=typ, is_in=True, is_out=False, name="LEFT", desc="First operand"),
+               PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
+               T.OUT_8("FLAG", "1 if condition holds, 0 otherwise")
+           ],
+           f"If LEFT is {op} RIGTH - set FLAG"))
+       current_code += 1
