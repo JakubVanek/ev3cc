@@ -404,25 +404,25 @@ suffixes: Dict[PlainParams, str] = {PlainParams.Int8: "8",
                                     PlainParams.Float32: "F"}
 ops: List[str] = ["LT", "GT", "EQ", "NEQ", "LTEQ", "GTEQ"]
 for op in ops:
-   for typ, end in suffixes:
-       OpCodes.append(OpCode(
-           (f"opCP_{op}{end}", current_code), None,
-           [
-               PlainParam(type=typ, is_in=True, is_out=False, name="LEFT", desc="First operand"),
-               PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
-               T.OUT_8("FLAG", "1 if condition holds, 0 otherwise")
-           ],
-           f"If LEFT is {op} RIGTH - set FLAG"))
-       OpCodes.append(OpCode(
-           (f"opJR_{op}{end}", adjacent_code), None,
-           [
-               PlainParam(type=typ, is_in=True, is_out=False, name="LEFT", desc="First operand"),
-               PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
-               T.IN_32("OFFSET", "Branch target, relative to ?")
-           ],
-           f"Branch relative OFFSET if LEFT is {op} RIGHT"))
-       current_code += 1
-       adjacent_code += 1
+    for typ, end in suffixes:
+        OpCodes.append(OpCode(
+            (f"opCP_{op}{end}", current_code), None,
+            [
+                PlainParam(type=typ, is_in=True, is_out=False, name="LEFT", desc="First operand"),
+                PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
+                T.OUT_8("FLAG", "1 if condition holds, 0 otherwise")
+            ],
+            f"If LEFT is {op} RIGTH - set FLAG"))
+        OpCodes.append(OpCode(
+            (f"opJR_{op}{end}", adjacent_code), None,
+            [
+                PlainParam(type=typ, is_in=True, is_out=False, name="LEFT", desc="First operand"),
+                PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
+                T.IN_32("OFFSET", "Branch target, relative to ?")
+            ],
+            f"Branch relative OFFSET if LEFT is {op} RIGHT"))
+        current_code += 1
+        adjacent_code += 1
 
 for typ, end in suffixes:
     OpCodes.append(OpCode(
@@ -433,5 +433,5 @@ for typ, end in suffixes:
             PlainParam(type=typ, is_in=True, is_out=False, name="SOURCE2", desc="Second value (False)"),
             PlainParam(type=typ, is_in=False, is_out=True, name="*RESULT", desc="Destination"),
         ],
-        f"Select DATA_{end} depending on bool flag value"))
+        f"Select a DATA_{end} depending on bool value of a flag"))
     current_code += 1
