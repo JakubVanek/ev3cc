@@ -808,3 +808,143 @@ OpCodes += [
                T.OUT_32("FREE", "Kbytes free"),
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opUI_WRITE", 0x82), ("WRITE_FLUSH", 1),
+           "Flush terminal buffer",
+           [
+
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("FLOATVALUE", 2),
+           "Log a float to terminal",
+           [
+               T.IN_F("VALUE", "Value to write"),
+               T.IN_8("FIGURES", "Total number of figures inclusive decimal point"),
+               T.IN_8("DECIMALS", "Number of decimals")
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("STAMP", 3),
+           "Log a timestamp to terminal",
+           [
+               T.IN_8("SOURCE", "User-specified Stamp ID")
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("PUT_STRING", 8),
+           "Log a string to terminal",
+           [
+               T.IN_8("STRING", "First character in string to write")
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("CODE", 14),
+           "Log binary data to terminal",
+           [
+               T.IN_8("ARRAY", "First byte in byte array to write"),
+               T.IN_32("LENGTH", "Length of array")
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("DOWNLOAD_END", 15),
+           "Send to brick when file down load is completed (plays sound and updates the UI browser)",
+           [
+
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("SCREEN_BLOCK", 16),
+           "Set or clear screen block status (if screen blocked - all graphical screen action are disabled)",
+           [
+               T.IN_8("STATUS", "Value [0 = normal,1 = blocked]"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("ALLOW_PULSE", 17),
+           "Enable pixel blinking for debugging",
+           [
+               T.IN_8("ENABLE", "Value [0 = disabled,1 = enabled]"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("SET_PULSE", 18),
+           "Trigger pixel blink",
+           [
+               T.IN_8("MASK", "Bitmask for blinking"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("TEXTBOX_APPEND", 21),
+           "Append line of text at the bottom of a text box",
+           [
+               T.IN_8("TEXT", "First character in text box text (must be zero terminated)"),
+               T.IN_32("SIZE", "Maximal text size (including zero termination)"),
+               T.IN_8("DELIMITERS", "Delimiter code"),
+               T.IN_8("SOURCE", "String variable or handle to string to append"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("SET_BUSY", 22),
+           "Assert/deassert WARNING_BUSY warning flag",
+           [
+               T.IN_8("VALUE", "Value [0,1]"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("VALUE8", 9),
+           "Log number to terminal",
+           [
+               T.IN_8("VALUE", "Value to write"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("VALUE16", 10),
+           "Log number to terminal",
+           [
+               T.IN_8("VALUE", "Value to write"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("VALUE32", 11),
+           "Log number to terminal",
+           [
+               T.IN_8("VALUE", "Value to write"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("VALUEF", 12),
+           "Log number to terminal",
+           [
+               T.IN_8("VALUE", "Value to write"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("INIT_RUN", 25),
+           "Start the 'Mindstorms' 'run' screen",
+           [
+
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("UPDATE_RUN", 26),
+           "Neither documented nor implemented",
+           [
+
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("LED", 27),
+           "Set brick LED pattern",
+           [
+               T.IN_8("PATTERN", "LED pattern (see leJOS or LEGO doc)"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("POWER", 29),
+           "Set the shutdown-after-unload flag for d_power.ko",
+           [
+               T.IN_8("PATTERN", "Value [0,1]"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("TERMINAL", 31),
+           "Enable/disable terminal stdout output",
+           [
+               T.IN_8("STATE", "Value [0 = Off,1 = On]"),
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("GRAPH_SAMPLE", 30),
+           "Update tick to scroll graph horizontally in memory when drawing graph in 'scope' mode",
+           [
+
+           ]),
+
+    OpCode(("opUI_WRITE", 0x82), ("SET_TESTPIN", 24),
+           "Set test pin level",
+           [
+               T.IN_8("STATE", "Value [0 = low,1 = high]"),
+           ]),
+]
