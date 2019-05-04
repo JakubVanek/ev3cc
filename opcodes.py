@@ -435,3 +435,33 @@ for typ, end in suffixes:
         ],
         f"Select a DATA_{end} depending on bool value of a flag"))
     current_code += 1
+
+OpCodes += [
+    OpCode(("opSYSTEM", 0x60), None,
+           [
+               T.IN_8("COMMAND", "Command string (HND)"),
+               T.OUT_32("STATUS", "Return status of the command")
+           ],
+           "Executes a system command"),
+    OpCode(("opPORT_CNV_OUTPUT", 0x61), None,
+           [
+               T.IN_32("PortIn", "EncodedPortNumber"),
+               T.OUT_8("Layer", "Layer"),
+               T.OUT_8("Bitfield", "Bitfield"),
+               T.OUT_8("Inverted", "True if left/right motor are inverted (ie, C&A)"),
+           ],
+           "Convert encoded port to Layer and Bitfield"),
+    OpCode(("opPORT_CNV_INPUT", 0x62), None,
+           [
+               T.IN_32("PortIn", "EncodedPortNumber"),
+               T.OUT_8("Layer", "Layer"),
+               T.OUT_8("PortOut", "0-index port for use with VM commands")
+           ],
+           "Convert encoded port to Layer and Port"),
+    OpCode(("opNOTE_TO_FREQ", 0x63), None,
+           [
+               T.IN_8("NOTE", "Note string (e.c. 'C#4')"),
+               T.OUT_16("FREQ", "Frequency [Hz]")
+           ],
+           "Convert note to tone"),
+]
