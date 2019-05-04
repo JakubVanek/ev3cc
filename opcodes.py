@@ -948,3 +948,101 @@ OpCodes += [
                T.IN_8("STATE", "Value [0 = low,1 = high]"),
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opUI_BUTTON", 0x83), ("SHORTPRESS", 1),
+           "Read and reset button short-press status",
+           [
+               T.IN_8("BUTTON", "Button code"),
+               T.OUT_8("STATE", "Button has been pressed (0 = no, 1 = yes)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("LONGPRESS", 2),
+           "Read and reset button long-press status",
+           [
+               T.IN_8("BUTTON", "Button code"),
+               T.OUT_8("STATE", "Button has been hold down(0 = no, 1 = yes)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("WAIT_FOR_PRESS", 3),
+           "Stop thread until any button is pressed",
+           [
+
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("FLUSH", 4),
+           "Reset all present button state",
+           [
+
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("PRESS", 5),
+           "Simulate button press",
+           [
+               T.IN_8("BUTTON", "Button code"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("RELEASE", 6),
+           "Simulate button release",
+           [
+               T.IN_8("BUTTON", "Button code"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("GET_HORZ", 7),
+           "Read horizontal key axis",
+           [
+               T.IN_16("VALUE", "Horizontal arrows data (-1 = left, +1 = right, 0 = not pressed)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("GET_VERT", 8),
+           "Read vertical key axis",
+           [
+               T.IN_16("VALUE", "Vertical arrows data (-1 = up, +1 = down, 0 = not pressed)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("PRESSED", 9),
+           "Read button pressed status",
+           [
+               T.IN_8("BUTTON", "Button code"),
+               T.OUT_8("STATE", "Button is pressed (0 = no, 1 = yes)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("SET_BACK_BLOCK", 10),
+           "Set UI back button blocked flag",
+           [
+               T.IN_8("BLOCKED", "New flag value (0 = not blocked, 1 = blocked)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("GET_BACK_BLOCK", 11),
+           "Get UI back button blocked flag",
+           [
+               T.IN_8("BLOCKED", "Current flag value (0 = not blocked, 1 = blocked)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("TESTSHORTPRESS", 12),
+           "Read button short-press status, without reset",
+           [
+               T.IN_8("BUTTON", "Button code"),
+               T.OUT_8("STATE", "Button has been hold down(0 = no, 1 = yes)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("TESTLONGPRESS", 13),
+           "Read button long-press status, without reset",
+           [
+               T.IN_8("BUTTON", "Button code"),
+               T.OUT_8("STATE", "Button has been hold down(0 = no, 1 = yes)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("GET_BUMBED", 14),
+           "Read and reset button bump status",
+           [
+               T.IN_8("BUTTON", "Button code"),
+               T.OUT_8("STATE", "Button has been pressed (0 = no, 1 = yes)"),
+           ]),
+
+    OpCode(("opUI_BUTTON", 0x83), ("GET_CLICK", 15),
+           "Get and clear click sound request (internal use only)",
+           [
+               T.OUT_8("CLICK", "Click sound request (0 = no, 1 = yes)"),
+           ]),
+]
