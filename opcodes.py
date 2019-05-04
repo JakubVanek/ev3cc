@@ -397,6 +397,7 @@ OpCodes += [
 ]
 
 current_code = 0x44
+adjacent_code = 0x64
 suffixes: Dict[PlainParams, str] = {PlainParams.Int8: "8",
                                     PlainParams.Int16: "16",
                                     PlainParams.Int32: "32",
@@ -412,7 +413,16 @@ for op in ops:
                T.OUT_8("FLAG", "1 if condition holds, 0 otherwise")
            ],
            f"If LEFT is {op} RIGTH - set FLAG"))
+       OpCodes.append(OpCode(
+           (f"opJR_{op}{end}", adjacent_code), None,
+           [
+               PlainParam(type=typ, is_in=True, is_out=False, name="LEFT", desc="First operand"),
+               PlainParam(type=typ, is_in=True, is_out=False, name="RIGHT", desc="Second operand"),
+               T.IN_32("OFFSET", "Branch target, relative to ?")
+           ],
+           f"Branch relative OFFSET if LEFT is {op} RIGHT"))
        current_code += 1
+       adjacent_code += 1
 
 for typ, end in suffixes:
     OpCodes.append(OpCode(
