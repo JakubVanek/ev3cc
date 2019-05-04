@@ -508,3 +508,82 @@ OpCodes += [
                T.IN_8("VALUE", "Minutes to sleep [0..120min] (0 = ~)")
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opSTRINGS", 0x7D), ("GET_SIZE", 1),
+           "Get size of string (not including zero termination)",
+           [
+               T.IN_8("SOURCE", "String variable or handle to string"),
+               T.OUT_16("SIZE", "Size")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("ADD", 2),
+           "Add two strings (SOURCE1 + SOURCE2 -> DESTINATION)",
+           [
+               T.IN_8("SOURCE1", "First string variable or handle to string"),
+               T.IN_8("SOURCE2", "Second string variable or handle to string"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("COMPARE", 3),
+           "Compare two strings",
+           [
+               T.IN_8("SOURCE1", "First string variable or handle to string"),
+               T.IN_8("SOURCE2", "Second string variable or handle to string"),
+               T.OUT_8("RESULT", "Result (0 = not equal, 1 = equal)")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("DUPLICATE", 5),
+           "Duplicate a string (SOURCE1 -> DESTINATION)",
+           [
+               T.IN_8("SOURCE1", "Source string variable or handle to string"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("VALUE_TO_STRING", 6),
+           "Convert floating point value to a string (strips trailing zeroes)",
+           [
+               T.IN_F("VALUE", "Value to write (if 'nan' up to 4 dashes is returned: '----')"),
+               T.IN_8("FIGURES", "Total number of figures inclusive decimal point (FIGURES < 0 -> Left adjusted)"),
+               T.IN_8("DECIMALS", "Number of decimals"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("STRING_TO_VALUE", 7),
+           "Convert string to floating point value",
+           [
+               T.IN_8("SOURCE", "Source string variable or handle to string"),
+               T.OUT_F("VALUE", "Value")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("STRIP", 8),
+           "Strip a string for spaces (SOURCE1 -> DESTINATION)",
+           [
+               T.IN_8("SOURCE", "Source string variable or handle to string"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("NUMBER_TO_STRING", 9),
+           "Convert integer value to a string",
+           [
+               T.IN_16("VALUE", "Value to write"),
+               T.IN_8("FIGURES", "Total number of figures"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("SUB", 10),
+           "Return DESTINATION: a substring from SOURCE1 that starts were SOURCE2 ends",
+           [
+               T.IN_8("SOURCE1", "First string variable or handle to string"),
+               T.IN_8("SOURCE2", "Second string variable or handle to string"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("VALUE_FORMATTED", 11),
+           "Convert floating point value to a formatted string",
+           [
+               T.IN_F("VALUE", "Value to write"),
+               T.IN_8("FORMAT", "Format string variable or handle to string"),
+               T.IN_8("SIZE", "Total size of destination string"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+    OpCode(("opSTRINGS", 0x7D), ("NUMBER_FORMATTED", 12),
+           "Convert integer number to a formatted string",
+           [
+               T.IN_32("NUMBER", "Number to write"),
+               T.IN_8("FORMAT", "Format string variable or handle to string"),
+               T.IN_8("SIZE", "Total size of destination string"),
+               T.OUT_8("DESTINATION", "Destination string variable or handle to string")
+           ]),
+]
