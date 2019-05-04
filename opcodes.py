@@ -465,3 +465,44 @@ OpCodes += [
            ],
            "Convert note to tone"),
 ]
+
+OpCodes += [
+    OpCode(("opINFO", 0x7C), ("SET_ERROR", 1),
+           [
+               T.IN_8("NUMBER", "Error number")
+           ],
+           "Push new error to VM error queue."),
+    OpCode(("opINFO", 0x7C), ("GET_ERROR", 2),
+           [
+               T.OUT_8("NUMBER", "Error number")
+           ],
+           "Pop an error from VM error queue."),
+    OpCode(("opINFO", 0x7C), ("ERRORTEXT", 3),
+           [
+               T.IN_8("NUMBER", "Error number"),
+               T.IN_8("LENGTH", "Maximal length of string returned (-1 = no check)"),
+               T.OUT_8("DESTINATION", "String variable or handle to string")
+           ],
+           "Convert error number to text string"),
+
+    OpCode(("opINFO", 0x7C), ("GET_VOLUME", 4),
+           [
+               T.OUT_8("VALUE", "Volume [0..100%]")
+           ],
+           "Get brick volume"),
+    OpCode(("opINFO", 0x7C), ("SET_VOLUME", 5),
+           [
+               T.IN_8("VALUE", "Volume [0..100%]")
+           ],
+           "Set brick volume"),
+    OpCode(("opINFO", 0x7C), ("GET_MINUTES", 6),
+           [
+               T.OUT_8("VALUE", "Minutes to sleep [0..120min] (0 = ~)")
+           ],
+           "Get inactive time before entering sleep"),
+    OpCode(("opINFO", 0x7C), ("SET_MINUTES", 7),
+           [
+               T.IN_8("VALUE", "Minutes to sleep [0..120min] (0 = ~)")
+           ],
+           "Set inactive time before entering sleep"),
+]
