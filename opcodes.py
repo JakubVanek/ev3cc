@@ -1365,3 +1365,31 @@ OpCodes += [
                T.IN_8("LINE", "Selected line number"),
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opTIMER_WAIT", 0x85), None,
+           "Setup timer to wait TIME mS",
+           [
+               T.IN_32("TIME", "Time to wait [mS]"),
+               T.IN_32("TIMER", "Variable used for timing")
+           ]),
+
+    OpCode(("opTIMER_READY", 0x86), None,
+           "Wait for timer ready (wait for timeout)",
+           [
+               T.IN_32("TIMER", "Variable used for timing")
+           ]),
+
+    OpCode(("opTIMER_READ", 0x87), None,
+           "Read free running timer [mS]",
+           [
+               T.IN_32("TIME", "Time to wait [mS]"),
+               T.OUT_32("TIME", "Value")
+           ]),
+
+    OpCode(("opTIMER_READ_US", 0x8F), None,
+           "Read free running timer [uS]",
+           [
+               T.OUT_32("TIME", "Value")
+           ])
+]
