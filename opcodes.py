@@ -1590,3 +1590,65 @@ OpCodes += [
                T.OUT_8("MINUTES", "Number of minutes before sleep"),
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opCOM_READ", 0x91), ("COMMAND", 14),
+           "Communication read (direct command request?)",
+           [
+               T.IN_32("DUMMY", "Unused"),
+               T.OUT_32("*IMAGE", "Address of image"),
+               T.OUT_32("*GLOBAL", "Address of global variables"),
+               T.OUT_8("FLAG", "Flag that tells if image is ready")
+           ]),
+
+    OpCode(("opCOM_WRITE", 0x92), ("REPLY", 14),
+           "Communication write (direct command reply?)",
+           [
+               T.IN_32("*IMAGE", "Address of image"),
+               T.IN_32("*GLOBAL", "Address of global variables"),
+               T.IN_8("STATUS", "Execution status of the direct command")
+           ]),
+]
+
+OpCodes += [
+    OpCode(("opSOUND", 0x94), ("BREAK", 0),
+           "Stop playing current sound",
+           []),
+
+    OpCode(("opSOUND", 0x94), ("TONE", 1),
+           "Play a tone",
+           [
+               T.IN_8("VOLUME", "Volume [0..100]"),
+               T.IN_16("FREQUENCY", "Frequency [Hz]"),
+               T.IN_16("DURATION", "Duration [mS]")
+           ]),
+
+    OpCode(("opSOUND", 0x94), ("PLAY", 2),
+           "Play audio from file, single run",
+           [
+               T.IN_8("VOLUME", "Volume [0..100]"),
+               T.IN_8("NAME", "First character in filename (character string)"),
+           ]),
+
+    OpCode(("opSOUND", 0x94), ("REPEAT", 3),
+           "Play audio from file, repeated run",
+           [
+               T.IN_8("VOLUME", "Volume [0..100]"),
+               T.IN_8("NAME", "First character in filename (character string)"),
+           ]),
+
+    OpCode(("opSOUND", 0x94), ("SERVICE", 4),
+           "Neither implemented nor documented",
+           []),
+
+    OpCode(("opSOUND_TEST", 0x95), None,
+           "Test if sound busy (playing file or tone)",
+           [
+               T.OUT_8("BUSY", "Sound busy flag (0 = ready, 1 = busy)"),
+           ]),
+
+    OpCode(("opSOUND_READY", 0x96), None,
+           "Wait for sound ready (wait until sound finished)",
+           [
+           ]),
+]
