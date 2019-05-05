@@ -1393,3 +1393,29 @@ OpCodes += [
                T.OUT_32("TIME", "Value")
            ])
 ]
+
+OpCodes += [
+    OpCode(("opBP0", 0x88), None,
+           "Breakpoint0 - Display globals or object locals on terminal & removes it self when done",
+           []),
+
+    OpCode(("opBP1", 0x89), None,
+           "Breakpoint1 - Display globals or object locals on terminal & removes it self when done",
+           []),
+
+    OpCode(("opBP2", 0x8A), None,
+           "Breakpoint2 - Display globals or object locals on terminal & removes it self when done",
+           []),
+
+    OpCode(("opBP3", 0x8B), None,
+           "Breakpoint3 - Display globals or object locals on terminal & removes it self when done",
+           []),
+
+    OpCode(("opBP_SET", 0x8C), None,
+           "Set break point in byte code program",
+           [
+               T.IN_16("PRGID", "Program slot number"),
+               T.IN_8("NO", "Breakpoint number [0..2] (3 = trigger out on TP4)"),
+               T.IN_32("ADDRESS", "Address (Offset from start of image) (0 = remove breakpoint)")
+           ]),
+]
