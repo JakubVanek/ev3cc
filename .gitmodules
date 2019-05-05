@@ -1,0 +1,3 @@
+[submodule "lmsasm"]
+	path = lmsasm
+	url = https://github.com/ev3dev/lmsasm.git
