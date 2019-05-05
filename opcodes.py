@@ -1419,3 +1419,158 @@ OpCodes += [
                T.IN_32("ADDRESS", "Address (Offset from start of image) (0 = remove breakpoint)")
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opMATH", 0x8D), ("EXP", 1),
+           "Natural exponentiation e^X (R = expf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("MOD", 2),
+           "Modulo (R = fmod(X,Y))",
+           [
+               T.IN_F("X", "First modulo argument"),
+               T.IN_F("Y", "Second modulo argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("FLOOR", 3),
+           "Floor (R = floor(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("CEIL", 4),
+           "Ceiling (R = ceil(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("ROUND", 5),
+           "Rounding (R = round(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("ABS", 6),
+           "Absolute value (R = fabs(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("NEGATE", 7),
+           "Negation (R = 0.0 - X)",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("SQRT", 8),
+           "Square root (R = sqrt(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("LOG", 9),
+           "Decimal logarithm (R = log10(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("LN", 10),
+           "Natural logarithm (R = log(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("SIN", 11),
+           "Sine (R = sinf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("COS", 12),
+           "Cosine (R = cosf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("TAN", 13),
+           "Tangent (R = tanf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("ASIN", 14),
+           "Inverse sine (R = asinf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("ACOS", 15),
+           "Inverse cosine (R = acosf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("ATAN", 16),
+           "Inverse tangent (R = atanf(X))",
+           [
+               T.IN_F("X", "Function argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("MOD8", 17),
+           "Modulo (R = X % Y)",
+           [
+               T.IN_8("X", "First modulo argument"),
+               T.IN_8("Y", "Second modulo argument"),
+               T.OUT_8("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("MOD16", 18),
+           "Modulo (R = X % Y)",
+           [
+               T.IN_16("X", "First modulo argument"),
+               T.IN_16("Y", "Second modulo argument"),
+               T.OUT_16("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("MOD32", 19),
+           "Modulo (R = X % Y)",
+           [
+               T.IN_32("X", "First modulo argument"),
+               T.IN_32("Y", "Second modulo argument"),
+               T.OUT_32("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("POW", 20),
+           "Exponent (R = powf(X,Y))",
+           [
+               T.IN_F("X", "First modulo argument"),
+               T.IN_F("Y", "Second modulo argument"),
+               T.OUT_F("R", "Result")
+           ]),
+
+    OpCode(("opMATH", 0x8D), ("TRUNC", 21),
+           "Truncate",
+           [
+               T.IN_F("X", "Value"),
+               T.IN_8("Y", "Precision [0..9]"),
+               T.OUT_F("R", "Result")
+           ]),
+]
