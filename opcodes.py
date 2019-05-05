@@ -1574,3 +1574,19 @@ OpCodes += [
                T.OUT_F("R", "Result")
            ]),
 ]
+
+OpCodes += [
+    OpCode(("opRANDOM", 0x8E), None,
+           "Get random value",
+           [
+               T.IN_16("MIN", "Minimum value"),
+               T.IN_16("MAX", "Maximum value"),
+               T.OUT_16("VALUE", "Value")
+           ]),
+
+    OpCode(("opKEEP_ALIVE", 0x90), None,
+           "Keep alive / get new remaining time until sleep",
+           [
+               T.OUT_8("MINUTES", "Number of minutes before sleep"),
+           ]),
+]
